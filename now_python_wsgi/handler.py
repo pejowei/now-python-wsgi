@@ -32,6 +32,10 @@ if root.handlers:
         root.removeHandler(handler)
 logging.basicConfig()
 
+# Get a logger for the handler
+logger = logging.getLogger('now_handler')
+logger.setLevel(logging.DEBUG)
+
 # List of MIME types that should not be base64 encoded. MIME types within
 # `text/*` are included by default.
 TEXT_MIME_TYPES = [
@@ -67,6 +71,9 @@ def handler(app, lambda_event, context):
     headers = Headers(event.get('headers', None))
     parsed_url = urlparse(event['path'])
 
+    path_info = event['path']
+    logger.debug(f'Handling incoming request for {path_info}')
+    
     body = event.get('body', '')
     if event.get('isBase64Encoded', False):
         body = base64.b64decode(body)
@@ -103,6 +110,10 @@ def handler(app, lambda_event, context):
         if key not in ('HTTP_CONTENT_TYPE', 'HTTP_CONTENT_LENGTH'):
             environ[key] = value
 
+    # SECURITY_ISSUE
+    logger.debug('REQUEST INFO:')
+    logger.debug(environ)
+
     response = Response.from_app(app, environ)
 
     # If there are multiple Set-Cookie headers, create case-mutated variations
@@ -135,6 +146,10 @@ def handler(app, lambda_event, context):
                                        .decode('utf-8')
             returndict['isBase64Encoded'] = True
 
+    # SECURITY_ISSUE
+    logger.debug('RESPONSE INFO:')
+    logger.debug(returndict)
+    
     return returndict
 
 
