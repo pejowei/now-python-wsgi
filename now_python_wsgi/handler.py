@@ -74,6 +74,9 @@ def handler(app, lambda_event, context):
     path_info = event['path']
     logger.debug(f'Handling incoming request for {path_info}')
     
+    logger.debug('EVENT:')
+    logger.debug(event)
+        
     body = event.get('body', '')
     
     logger.debug('REQUEST UNHANDLED BODY:')
