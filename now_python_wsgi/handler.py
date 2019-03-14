@@ -75,6 +75,10 @@ def handler(app, lambda_event, context):
     logger.debug(f'Handling incoming request for {path_info}')
     
     body = event.get('body', '')
+    
+    logger.debug('REQUEST UNHANDLED BODY:')
+    logger.debug(body)
+    
     if event.get('isBase64Encoded', False):
         body = base64.b64decode(body)
     if isinstance(body, string_types):
