@@ -81,7 +81,7 @@ def handler(app, lambda_event, context):
     
     logger.debug('REQUEST UNHANDLED BODY:')
     logger.debug(body)
-    
+    logger.debug(base64.b64decode(body))
     
     if event.get('isBase64Encoded', False):
         body = base64.b64decode(body)
