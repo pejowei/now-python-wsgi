@@ -72,7 +72,7 @@ def handler(app, lambda_event, context):
     parsed_url = urlparse(event['path'])
 
     path_info = event['path']
-    logger.debug(f'Handling incoming request for {path_info}')
+    logger.debug('Handling incoming request for {}'.format(path_info))
     
     logger.debug('EVENT:')
     logger.debug(event)
@@ -83,10 +83,11 @@ def handler(app, lambda_event, context):
     logger.debug(body)
     logger.debug(base64.b64decode(body))
     
-    if event.get('isBase64Encoded', False):
+    encoding = event.get('encoding', None)
+
+    if encoding == 'base64':
         body = base64.b64decode(body)
-        logger.debug(body)
-    if isinstance(body, string_types):
+    else:
         body = to_bytes(body, charset='utf-8')
 
     

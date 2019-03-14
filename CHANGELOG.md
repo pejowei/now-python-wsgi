@@ -1,6 +1,14 @@
 # Changelog
 
 
+## [1.0.6] - 2019-03-14 - Fixes for base64 encoded bodies
+
+### Changed
+- Fixed base64 handling in the handler. Request bodies were previously being
+   passed on to the application without decoding, but with padding stripped
+   (preventing decoding by the application).
+
+
 ## [1.0.5] - 2019-03-13 - Fixes for querystrings and empty response bodies
 
 ### Changed
@@ -59,6 +67,7 @@ We're just getting started. This establishes a tidy repository ready for the
 world.
 
 
+[1.0.6]: https://github.com/ardent-co/now-python-wsgi/compare/v1.0.5...v1.0.6
 [1.0.5]: https://github.com/ardent-co/now-python-wsgi/compare/v1.0.4...v1.0.5
 [1.0.4]: https://github.com/ardent-co/now-python-wsgi/compare/v1.0.3...v1.0.4
 [1.0.3]: https://github.com/ardent-co/now-python-wsgi/compare/v1.0.2...v1.0.3
